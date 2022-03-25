@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone_app/models/models.dart';
+import 'package:netflix_clone_app/widgets/widgets.dart';
 
 class ContentHeader extends StatelessWidget {
   const ContentHeader({
@@ -45,10 +46,50 @@ class ContentHeader extends StatelessWidget {
           bottom: 40,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [],
+            children: [
+              VerticalIconButton(
+                onTap: () => debugPrint('My List'),
+                title: 'List',
+                icon: Icons.add,
+              ),
+              const _PlayButton(),
+              VerticalIconButton(
+                onTap: () => debugPrint('My Info'),
+                title: 'Info',
+                icon: Icons.info_outline,
+              ),
+            ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class _PlayButton extends StatelessWidget {
+  const _PlayButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton.icon(
+      onPressed: () => debugPrint('Play'),
+      icon: const Icon(
+        Icons.play_arrow,
+        size: 30,
+        color: Colors.black,
+      ),
+      label: const Text(
+        'Play',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      style: TextButton.styleFrom(
+        backgroundColor: Colors.white,
+        padding: const EdgeInsets.fromLTRB(15, 5, 20, 5),
+      ),
     );
   }
 }
