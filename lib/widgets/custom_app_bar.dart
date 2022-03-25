@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:netflix_clone_app/assets.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({Key? key}) : super(key: key);
+  const CustomAppBar({
+    Key? key,
+    this.scrollOffset = 0.0,
+  }) : super(key: key);
+  final double scrollOffset;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +15,9 @@ class CustomAppBar extends StatelessWidget {
         vertical: 10,
         horizontal: 24,
       ),
-      color: Colors.orange,
+      color: Colors.black.withOpacity(
+        (scrollOffset / 350).clamp(0, 1).toDouble(),
+      ),
       child: SafeArea(
         child: Row(
           children: [
