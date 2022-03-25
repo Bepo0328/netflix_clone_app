@@ -17,22 +17,51 @@ class CustomAppBar extends StatelessWidget {
           children: [
             Image.asset(Assets.netflixLogo0),
             const SizedBox(width: 12),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () => debugPrint('Tv Shows'),
-                  child: const Text(
-                    'Tv Shows',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _AppBarButton(
+                    onTap: () => debugPrint('TV Shows'),
+                    title: 'TV Shows',
                   ),
-                ),
-              ],
+                  _AppBarButton(
+                    onTap: () => debugPrint('Movies'),
+                    title: 'Movies',
+                  ),
+                  _AppBarButton(
+                    onTap: () => debugPrint('My List'),
+                    title: 'My List',
+                  ),
+                ],
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AppBarButton extends StatelessWidget {
+  const _AppBarButton({
+    Key? key,
+    required this.onTap,
+    required this.title,
+  }) : super(key: key);
+  final Function() onTap;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
