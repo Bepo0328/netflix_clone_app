@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_clone_app/screens/screens.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,12 +15,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        scaffoldBackgroundColor: Colors.black,
       ),
-      home: const Scaffold(
-        body: Center(
-          child: Text('Main Screen'),
-        ),
-      ),
+      home: const HomeScreen(),
     );
   }
 }
