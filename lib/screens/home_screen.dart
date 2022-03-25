@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_clone_app/data/data.dart';
 import 'package:netflix_clone_app/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       floatingActionButton: FloatingActionButton(
         onPressed: () => debugPrint('Cast'),
         backgroundColor: Colors.grey[850],
@@ -44,11 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: CustomScrollView(
         controller: _scrollController,
-        slivers: [
+        slivers: const [
           SliverToBoxAdapter(
-            child: Container(
-              height: 1000,
-              color: Colors.blue,
+            child: ContentHeader(
+              featuredContent: sintelContent,
             ),
           ),
         ],
