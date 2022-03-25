@@ -26,7 +26,7 @@ class Previews extends StatelessWidget {
             ),
           ),
         ),
-        Container(
+        SizedBox(
           height: 165,
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(
