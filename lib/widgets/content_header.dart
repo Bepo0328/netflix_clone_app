@@ -96,7 +96,7 @@ class _ContentHeaderDesktop extends StatefulWidget {
 
 class _ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
   late VideoPlayerController _videoPlayerController;
-  bool _isMuted = false;
+  bool _isMuted = true;
 
   @override
   void initState() {
@@ -104,6 +104,7 @@ class _ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
     _videoPlayerController =
         VideoPlayerController.network(widget.featuredContent.videoUrl)
           ..initialize().then((_) => setState(() {}))
+          ..setVolume(0)
           ..play();
   }
 
@@ -122,22 +123,33 @@ class _ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
       child: Stack(
         alignment: Alignment.bottomLeft,
         children: [
-          Container(
-            height: 500,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(widget.featuredContent.imageUrl),
-                fit: BoxFit.cover,
-              ),
-            ),
+          AspectRatio(
+            aspectRatio: _videoPlayerController.value.isInitialized
+                ? _videoPlayerController.value.aspectRatio
+                : 2.344,
+            child: _videoPlayerController.value.isInitialized
+                ? VideoPlayer(_videoPlayerController)
+                : Image.asset(
+                    widget.featuredContent.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
           ),
-          Container(
-            height: 500,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.black, Colors.transparent],
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: -1,
+            child: AspectRatio(
+              aspectRatio: _videoPlayerController.value.isInitialized
+                  ? _videoPlayerController.value.aspectRatio
+                  : 2.344,
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.black, Colors.transparent],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
               ),
             ),
           ),
@@ -178,16 +190,19 @@ class _ContentHeaderDesktopState extends State<_ContentHeaderDesktop> {
                       icon: const Icon(
                         Icons.info_outline,
                         color: Colors.black,
+                        size: 30,
                       ),
                       label: const Text(
                         'More Info',
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.white,
+                        padding: const EdgeInsets.fromLTRB(25, 10, 30, 10),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -237,7 +252,9 @@ class _PlayButton extends StatelessWidget {
       ),
       style: TextButton.styleFrom(
         backgroundColor: Colors.white,
-        padding: const EdgeInsets.fromLTRB(15, 5, 20, 5),
+        padding: !Responsive.isDesktop(context)
+            ? const EdgeInsets.fromLTRB(15, 5, 20, 5)
+            : const EdgeInsets.fromLTRB(25, 10, 30, 10),
       ),
     );
   }

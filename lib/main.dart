@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone_app/screens/screens.dart';
 
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: _MyCustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
       title: 'Netflix Clone App',
       theme: ThemeData(
@@ -20,4 +22,12 @@ class MyApp extends StatelessWidget {
       home: const NavScreen(),
     );
   }
+}
+
+class _MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }
