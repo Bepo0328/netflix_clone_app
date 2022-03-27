@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_clone_app/cubits/cubits.dart';
 import 'package:netflix_clone_app/screens/screens.dart';
+import 'package:netflix_clone_app/widgets/widgets.dart';
 
 class NavScreen extends StatefulWidget {
   const NavScreen({Key? key}) : super(key: key);
@@ -36,30 +37,32 @@ class _NavScreenState extends State<NavScreen> {
         create: (_) => AppBarCubit(),
         child: _screens[_currentIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) => setState(() {
-          _currentIndex = index;
-        }),
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black,
-        items: _icons
-            .map(
-              (title, icon) => MapEntry(
-                title,
-                BottomNavigationBarItem(
-                  label: title,
-                  icon: Icon(icon, size: 30),
-                ),
-              ),
+      bottomNavigationBar: !Responsive.isDesktop(context)
+          ? BottomNavigationBar(
+              onTap: (index) => setState(() {
+                _currentIndex = index;
+              }),
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.black,
+              items: _icons
+                  .map(
+                    (title, icon) => MapEntry(
+                      title,
+                      BottomNavigationBarItem(
+                        label: title,
+                        icon: Icon(icon, size: 30),
+                      ),
+                    ),
+                  )
+                  .values
+                  .toList(),
+              currentIndex: _currentIndex,
+              selectedItemColor: Colors.white,
+              selectedFontSize: 11,
+              unselectedItemColor: Colors.grey,
+              unselectedFontSize: 11,
             )
-            .values
-            .toList(),
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.white,
-        selectedFontSize: 11,
-        unselectedItemColor: Colors.grey,
-        unselectedFontSize: 11,
-      ),
+          : null,
     );
   }
 }
